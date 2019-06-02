@@ -31,6 +31,7 @@ download({
 | `sourceUrl`        |    YES    | Source URL (http, https, ftp)       |   NA    |
 | `targetPath`       |    YES    | Input encoding (UTF-8, LATIN1,...)  |   NA    |
 | `downloadIfExists` |    NO     | Download file if targetPath exists? | `true`  |
+| `unsafeSsl`        |    NO     | Disable certificate checking        | `false` |
 
 ## License
 

@@ -12,11 +12,15 @@ const { exec } = require('child_process');
  * @param {String} options.sourceUrl
  * @param {String} options.targetPath
  * @param {Boolean} [options.downloadIfExists=true]
+ * @param {Boolean} [options.unsafeSsl=false] disable certificate checking
  * @returns {Promise}
  */
 function download(options) {
     if (typeof options.downloadIfExists === 'undefined') {
         options.downloadIfExists = true;
+    }
+    if (typeof options.unsafeSsl === 'undefined') {
+        options.unsafeSsl = false;
     }
 
     debug('Downloading ' + options.sourceUrl + ' to ' + options.targetPath + ' ...');
@@ -34,7 +38,11 @@ function download(options) {
         }
 
         /* Download to tempPath, rename and resolve when download is complete */
-        let command = `wget -nv -O "${tempPath}" "${options.sourceUrl}"`;
+        let command = 'wget -nv ';
+        if ( options.unsafeSsl ){
+            command += ' --no-check-certificate ';
+        }
+        command += `-O "${tempPath}" "${options.sourceUrl}"`;
         debug(command);
         exec(command, (error, stdout, stderr) => {
             if (error) {
