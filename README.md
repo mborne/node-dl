@@ -1,4 +1,4 @@
-# node-download
+# node-dl
 
 ## Description
 
@@ -12,7 +12,7 @@ Note that :
 ## Usage
 
 ```js
-const download = require('@mborne/download');
+const download = require('@mborne/dl');
 
 download({
     sourceUrl: 'https://github.com/mborne.keys',

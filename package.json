@@ -1,5 +1,5 @@
 {
-  "name": "@mborne/download",
+  "name": "@mborne/dl",
   "version": "0.1.0",
   "description": "Helper based on wget to download files",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mborne/node-download.git"
+    "url": "git+https://github.com/mborne/node-dl.git"
   },
   "keywords": [
     "download",
@@ -20,9 +20,9 @@
   "author": "Mickaël Borne <mborne@users.noreply.github.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mborne/node-download/issues"
+    "url": "https://github.com/mborne/node-dl/issues"
   },
-  "homepage": "https://github.com/mborne/node-download#readme",
+  "homepage": "https://github.com/mborne/node-dl#readme",
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.1.4"
