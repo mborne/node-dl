@@ -39,17 +39,19 @@ function download(options) {
 
         /* Download to tempPath, rename and resolve when download is complete */
         let command = 'wget -nv ';
-        if ( options.unsafeSsl ){
+        if (options.unsafeSsl) {
             command += ' --no-check-certificate ';
         }
         command += `-O "${tempPath}" "${options.sourceUrl}"`;
         debug(command);
         exec(command, (error, stdout, stderr) => {
             if (error) {
-                reject("command fail : "+command);
+                fs.unlinkSync(tempPath);
+                reject("command fail : " + command);
+            } else {
+                fs.renameSync(tempPath, options.targetPath);
+                resolve(options.targetPath);
             }
-            fs.renameSync(tempPath, options.targetPath);
-            resolve(options.targetPath);
         });
     });
 };
