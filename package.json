@@ -1,6 +1,6 @@
 {
   "name": "@mborne/dl",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Helper based on wget to download files",
   "main": "index.js",
   "scripts": {
