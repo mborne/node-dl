@@ -1,5 +1,7 @@
 # node-dl
 
+[![Node.js CI](https://github.com/mborne/node-dl/actions/workflows/node.js.yml/badge.svg)](https://github.com/mborne/node-dl/actions/workflows/node.js.yml) [![Coverage Status](https://coveralls.io/repos/github/mborne/node-dl/badge.svg?branch=master)](https://coveralls.io/github/mborne/node-dl?branch=master)
+
 ## Description
 
 Download file from a given `sourceUrl` to a `targetPath`.
