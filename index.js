@@ -13,19 +13,18 @@ const { exec } = require('child_process');
  * @param {String} options.targetPath
  * @param {Boolean} [options.downloadIfExists=true]
  * @param {Boolean} [options.unsafeSsl=false] disable certificate checking
- * @returns {Promise}
+ * @returns {string} the target path
  */
-function download(options) {
-    if (typeof options.downloadIfExists === 'undefined') {
-        options.downloadIfExists = true;
-    }
-    if (typeof options.unsafeSsl === 'undefined') {
-        options.unsafeSsl = false;
-    }
+async function download(options) {
+    const {
+        downloadIfExists = true,
+        unsafeSsl = false
+    } = options;
+
 
     debug('Downloading ' + options.sourceUrl + ' to ' + options.targetPath + ' ...');
     return new Promise(function (resolve, reject) {
-        if ((!options.downloadIfExists) && fs.existsSync(options.targetPath)) {
+        if ((!downloadIfExists) && fs.existsSync(options.targetPath)) {
             debug('File ' + options.targetPath + ' already exists');
             resolve(options.targetPath);
             return;
@@ -39,13 +38,14 @@ function download(options) {
 
         /* Download to tempPath, rename and resolve when download is complete */
         let command = 'wget -nv ';
-        if (options.unsafeSsl) {
+        if (unsafeSsl) {
             command += ' --no-check-certificate ';
         }
         command += `-O "${tempPath}" "${options.sourceUrl}"`;
         debug(command);
         exec(command, (error, stdout, stderr) => {
             if (error) {
+                debug(stderr);
                 fs.unlinkSync(tempPath);
                 reject("command fail : " + command);
             } else {
