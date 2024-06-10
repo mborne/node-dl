@@ -45,6 +45,7 @@ async function download(options) {
         debug(command);
         exec(command, (error, stdout, stderr) => {
             if (error) {
+                debug(stderr);
                 fs.unlinkSync(tempPath);
                 reject("command fail : " + command);
             } else {

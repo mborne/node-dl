@@ -8,8 +8,7 @@ describe("Test download", function () {
     it("should work for a github readme", async function () {
         let targetPath = await download({
             sourceUrl: 'https://raw.githubusercontent.com/mborne/satis-gitlab/master/README.md',
-            targetPath: '/tmp/readme.md',
-            downloadIfExists: true
+            targetPath: '/tmp/readme.md'
         });
         let content = readFileSync(targetPath,'utf-8');
         expect(content).to.contain("Create SATIS project");
