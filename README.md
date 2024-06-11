@@ -1,6 +1,6 @@
 # node-dl
 
-[![Node.js CI](https://github.com/mborne/node-dl/actions/workflows/node.js.yml/badge.svg)](https://github.com/mborne/node-dl/actions/workflows/node.js.yml) [![Coverage Status](https://coveralls.io/repos/github/mborne/node-dl/badge.svg?branch=master)](https://coveralls.io/github/mborne/node-dl?branch=master)
+[![Node.js CI](https://github.com/mborne/node-dl/actions/workflows/node.js.yml/badge.svg)](https://github.com/mborne/node-dl/actions/workflows/node.js.yml) [![Coverage Status](https://coveralls.io/repos/github/mborne/node-dl/badge.svg?branch=master&kill_cache=1)](https://coveralls.io/github/mborne/node-dl?branch=master)
 
 Download file from a given `sourceUrl` to a `targetPath` with `wget`.
 
