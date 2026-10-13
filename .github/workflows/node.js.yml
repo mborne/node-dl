@@ -13,16 +13,15 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x,20.x]
+        node-version: [22.x,24.x]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        #cache: 'npm'
 
     - name: Install dependencies
       run: npm install
@@ -31,7 +30,7 @@ jobs:
       run: npm test
 
     - name: Publish coverage to coveralls.io
-      run: npm run coveralls
-      if: github.ref == 'refs/heads/master' && matrix.node-version == '20.x'
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      uses: coverallsapp/github-action@v2
+      if: github.ref == 'refs/heads/master' && matrix.node-version == '24.x'
+      with:
+        file: coverage/lcov.info
