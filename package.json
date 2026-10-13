@@ -1,12 +1,16 @@
 {
   "name": "@mborne/dl",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Helper based on wget to download files",
   "main": "index.js",
-  "types": "index.d.ts",
+  "files": [
+    "index.js"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --reporter=cobertura mocha",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc --reporter=html --reporter=text --reporter=lcov mocha"
   },
   "repository": {
     "type": "git",
@@ -27,9 +31,7 @@
   "homepage": "https://github.com/mborne/node-dl#readme",
   "devDependencies": {
     "chai": "^5.1.1",
-    "coveralls": "^3.1.1",
     "mocha": "^10.4.0",
-    "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^17.0.0"
   },
   "directories": {

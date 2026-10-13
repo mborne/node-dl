@@ -1,6 +1,6 @@
 const debug = require('debug')('download');
 const fs = require('fs');
-const { exec } = require('child_process');
+const { execFile } = require('child_process');
 
 /**
  * Download file from a given sourceUrl to a targetPath
@@ -13,7 +13,7 @@ const { exec } = require('child_process');
  * @param {String} options.targetPath
  * @param {Boolean} [options.downloadIfExists=true]
  * @param {Boolean} [options.unsafeSsl=false] disable certificate checking
- * @returns {string} the target path
+ * @returns {Promise<string>} the target path
  */
 async function download(options) {
     const {
@@ -37,17 +37,17 @@ async function download(options) {
         }
 
         /* Download to tempPath, rename and resolve when download is complete */
-        let command = 'wget -nv ';
+        const args = ['-nv'];
         if (unsafeSsl) {
-            command += ' --no-check-certificate ';
+            args.push('--no-check-certificate');
         }
-        command += `-O "${tempPath}" "${options.sourceUrl}"`;
-        debug(command);
-        exec(command, (error, stdout, stderr) => {
+        args.push('-O', tempPath, '--', options.sourceUrl);
+        debug('wget ' + args.join(' '));
+        execFile('wget', args, (error, stdout, stderr) => {
             if (error) {
                 debug(stderr);
-                fs.unlinkSync(tempPath);
-                reject("command fail : " + command);
+                fs.rmSync(tempPath, { force: true });
+                reject(new Error(`fail to download ${options.sourceUrl} : ${error.message}`));
             } else {
                 fs.renameSync(tempPath, options.targetPath);
                 resolve(options.targetPath);

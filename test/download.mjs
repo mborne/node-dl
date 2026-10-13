@@ -1,6 +1,8 @@
 import { expect } from "chai";
 
-import {readFileSync, writeFileSync, existsSync, unlinkSync} from 'fs';
+import {readFileSync, writeFileSync, existsSync, unlinkSync, mkdtempSync, readdirSync} from 'fs';
+import { tmpdir } from 'os';
+import { join } from 'path';
 
 import download from "../index.js";
 
@@ -66,5 +68,29 @@ describe("Test download", function () {
         }
         expect(existsSync('/tmp/not-found.md')).to.equal(false);
         expect(catched).to.equal(true);
+    });
+
+    it("should reject with an Error when temp file can't be created", async function () {
+        let error = null;
+        try {
+            await download({
+                sourceUrl: 'https://raw.githubusercontent.com/mborne/satis-gitlab/master/README.md',
+                targetPath: '/tmp/not-found-dir/readme.md'
+            });
+        }catch(e){
+            error = e;
+        }
+        expect(error).to.be.instanceOf(Error);
+    });
+
+    it("should not interpret shell syntax in targetPath and sourceUrl", async function () {
+        const dir = mkdtempSync(join(tmpdir(), 'node-dl-'));
+        const targetPath = await download({
+            sourceUrl: 'https://raw.githubusercontent.com/mborne/satis-gitlab/master/README.md?$(touch ' + join(dir, 'INJECTED-URL') + ')',
+            targetPath: join(dir, 'readme$(touch INJECTED).md')
+        });
+        expect(targetPath).to.equal(join(dir, 'readme$(touch INJECTED).md'));
+        expect(existsSync(targetPath)).to.equal(true);
+        expect(readdirSync(dir)).to.deep.equal(['readme$(touch INJECTED).md']);
     });
 });
