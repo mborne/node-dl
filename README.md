@@ -17,7 +17,7 @@ Download file from a given `sourceUrl` to a `targetPath` with `wget`.
 ## Usage
 
 ```js
-const download = require('@mborne/dl');
+import download from '@mborne/dl';
 
 /*
  * Note that a temp file `{targetPath}.part` is created while downloading to handle download interruptions
